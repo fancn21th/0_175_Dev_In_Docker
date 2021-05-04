@@ -4,6 +4,9 @@ services:
     build: .
     ports:
       - "3000:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules # this is a hack for disabling volume binding sync issue
     environment:
       - PORT=3000
     # env_file:
