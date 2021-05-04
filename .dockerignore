@@ -1,0 +1,13 @@
+# npm package
+node_modules
+
+# vscode
+.vscode
+
+# git
+.git
+.gitignore
+
+# docker
+.dockerignore
+
