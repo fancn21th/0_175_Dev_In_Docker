@@ -1,0 +1,13 @@
+version: "3"
+services:
+  node-app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules # this is a hack for disabling volumn binding sync issue
+    environment:
+      - PORT=3000
+    # env_file:
+    #   - ./.env
