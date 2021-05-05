@@ -23,6 +23,7 @@ mongoose
 //  express app
 const express = require("express");
 const postRouter = require("./routes/post.route");
+const userRouter = require("./routes/user.route");
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/posts", postRouter);
+app.use("/api/v1/users", userRouter);
 
 const port = process.env.PORT || 3000;
 
