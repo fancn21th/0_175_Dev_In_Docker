@@ -3,8 +3,8 @@ const bcrypt = require("bcryptjs");
 
 exports.signUp = async (req, res) => {
   const { username, password } = req.body;
-  const hashpassword = await bcrypt.hash(password, 12);
   try {
+    const hashpassword = await bcrypt.hash(password, 12);
     const newUser = await User.create({
       username,
       password: hashpassword,
@@ -15,6 +15,37 @@ exports.signUp = async (req, res) => {
         user: newUser,
       },
     });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+    });
+  }
+};
+
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      res.status(404).json({
+        status: "fail",
+        message: "user not found",
+      });
+    }
+
+    const isPwdCorrect = bcrypt.compareSync(password, user.password); // https://www.npmjs.com/package/bcryptjs
+
+    if (isPwdCorrect) {
+      res.status(200).json({
+        status: "success",
+      });
+    } else {
+      res.status(400).json({
+        status: "fail",
+        message: "incorrect username or password",
+      });
+    }
   } catch (error) {
     res.status(400).json({
       status: "fail",
