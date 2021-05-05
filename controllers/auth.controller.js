@@ -5,10 +5,15 @@ exports.signUp = async (req, res) => {
   const { username, password } = req.body;
   try {
     const hashpassword = await bcrypt.hash(password, 12);
+
     const newUser = await User.create({
       username,
       password: hashpassword,
     });
+
+    // set session
+    req.session.user = newUser;
+
     res.status(201).json({
       status: "success",
       data: {
@@ -38,9 +43,9 @@ exports.login = async (req, res) => {
     const isPwdCorrect = bcrypt.compareSync(password, user.password); // https://www.npmjs.com/package/bcryptjs
 
     if (isPwdCorrect) {
-      const sess = req.session;
-      sess.username = username;
-      sess.password = password;
+      // set session
+      req.session.user = user;
+
       res.status(200).json({
         status: "success",
       });
