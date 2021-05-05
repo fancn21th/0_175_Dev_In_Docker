@@ -10,4 +10,11 @@ services:
       - /app/node_modules # this is a hack for disabling volumn binding sync issue
     environment:
       - NODE_ENV=development
+      - MONGO_USER=alexfan
+      - MONGO_PASSWORD=fancn21th
     command: yarn dev
+
+  mongo:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=alexfan
+      - MONGO_INITDB_ROOT_PASSWORD=fancn21th
