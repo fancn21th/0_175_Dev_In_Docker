@@ -18,6 +18,7 @@ exports.signUp = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       status: "fail",
+      error,
     });
   }
 };
@@ -37,6 +38,9 @@ exports.login = async (req, res) => {
     const isPwdCorrect = bcrypt.compareSync(password, user.password); // https://www.npmjs.com/package/bcryptjs
 
     if (isPwdCorrect) {
+      const sess = req.session;
+      sess.username = username;
+      sess.password = password;
       res.status(200).json({
         status: "success",
       });
@@ -49,6 +53,7 @@ exports.login = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       status: "fail",
+      error,
     });
   }
 };
